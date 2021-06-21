@@ -4,9 +4,20 @@
     margin: 36px auto;
     max-width: 60vw;
     text-align: center;
+   
+  
+}
+
+.dishForm {
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-  
+    gap: 22px;
+}
+
+.buttonWrapper {
+
+    margin-top: 16px;
 }
 
