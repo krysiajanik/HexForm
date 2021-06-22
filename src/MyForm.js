@@ -82,6 +82,13 @@ const MyForm = () => {
         errors.diameter = "Required!";
       }
     }
+    if (
+      e.diameter &&
+      !e.diameter.match(/[0-7][0-9].[0-9]|[0-8][0-0].[0-0]/g)
+    ) {
+      errors.diameter = "Please input value in format 00.0!";
+    }
+
     if (e.type === "soup") {
       if (!e.spiciness_scale) {
         errors.spiciness_scale = "Required!";
@@ -151,8 +158,8 @@ const MyForm = () => {
                 component={TextField}
                 type="number"
                 validate={composeValidators(minValue(10) && maxValue(80))}
+                placeholder="00.0"
                 step="0.1"
-                parse={(value) => value && parseInt(value)}
                 fullWidth
                 required
               />
