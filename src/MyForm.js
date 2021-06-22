@@ -24,10 +24,17 @@ const Condition = ({ when, is, children }) => (
   </Field>
 );
 
+const normalizeDuration = (value) => {
+  if (!value) return value;
+  const onlyNums = value.replace(/[^\d]/g, "");
+  return `${onlyNums.slice(0, 2)}:${onlyNums.slice(2, 4)}:${onlyNums.slice(
+    4,
+    6
+  )}`;
+};
+
 const MyForm = () => {
   const onSubmit = async (values) => {
-  
-
     const newDish = JSON.stringify(values, 0, 2);
     var postHeaders = new Headers();
     postHeaders.append("Content-Type", "application/json");
@@ -47,7 +54,6 @@ const MyForm = () => {
       .catch((error) => console.log("error", error));
   };
 
-
   const validate = (e) => {
     const errors = {};
 
@@ -57,6 +63,14 @@ const MyForm = () => {
     if (!e.preparation_time) {
       errors.preparation_time = "Required!";
     }
+
+    if (
+      e.preparation_time &&
+      !e.preparation_time.match(/[0-0][0-2]:[0-5][0-9]:[0-5][0-9]/g)
+    ) {
+      errors.preparation_time = "Incorrect input - max duration 02:59:59";
+    }
+
     if (!e.type) {
       errors.type = "Required!";
     }
@@ -104,6 +118,7 @@ const MyForm = () => {
               type="text"
               label="Preparation time"
               placeholder="00:00:00"
+              parse={normalizeDuration}
             />
 
             <Field
@@ -125,8 +140,8 @@ const MyForm = () => {
                 label="Number of slices"
                 component={TextField}
                 type="number"
-                validate={composeValidators(minValue(1)  && maxValue(12))}
-                parse={value => value && parseInt(value)}
+                validate={composeValidators(minValue(1) && maxValue(12))}
+                parse={(value) => value && parseInt(value)}
                 fullWidth
                 required
               />
@@ -159,7 +174,7 @@ const MyForm = () => {
                 component={TextField}
                 type="number"
                 validate={composeValidators(minValue(0) && maxValue(8))}
-                parse={value => value && parseInt(value)}
+                parse={(value) => value && parseInt(value)}
                 fullWidth
                 required
               />
