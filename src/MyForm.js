@@ -100,7 +100,7 @@ const MyForm = () => {
   return (
     <div className={styles.wrapper}>
       <Form onSubmit={onSubmit} validate={validate}>
-        {({ handleSubmit, values, ...props }) => (
+        {({ handleSubmit, values, form, submitting, ...props }) => (
           <form onSubmit={handleSubmit} className={styles.dishForm}>
             <Field
               fullWidth
@@ -152,6 +152,7 @@ const MyForm = () => {
                 type="number"
                 validate={composeValidators(minValue(10) && maxValue(80))}
                 step="0.1"
+                parse={(value) => value && parseInt(value)}
                 fullWidth
                 required
               />
@@ -180,6 +181,15 @@ const MyForm = () => {
               />
             </Condition>
             <span className={styles.buttonWrapper}>
+              <Button
+                variant="outlined"
+                size="medium"
+                type="button"
+                onClick={form.reset}
+                disabled={submitting}
+              >
+                Reset
+              </Button>
               <Button
                 variant="outlined"
                 size="medium"

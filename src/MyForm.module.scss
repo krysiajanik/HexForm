@@ -17,7 +17,11 @@
 }
 
 .buttonWrapper {
-
-    margin-top: 16px;
+    margin: 16px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 22px;
 }
 
