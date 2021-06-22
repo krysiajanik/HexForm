@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Form, Field } from "react-final-form";
 import { TextField } from "final-form-material-ui";
 import { MenuItem, Button } from "@material-ui/core";
@@ -15,7 +15,7 @@ const composeValidators =
       undefined
     );
 
-const Condition = ({ when, is, children }) => (
+const Condition = ({ when, is, children}) => (
   <Field name={when} subscription={{ value: true }}>
     {({ input: { value } }) => (value === is ? children : null)}
   </Field>
@@ -23,9 +23,21 @@ const Condition = ({ when, is, children }) => (
 
 const MyForm = () => {
   const onSubmit = async (values) => {
-    // const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-    // await sleep(300);
-    console.log(JSON.stringify(values, 0, 2));
+    const newDish = JSON.stringify(values, 0, 2);
+    var postHeaders = new Headers();
+    postHeaders.append("Content-Type", "application/json");
+
+    const postDishes = {
+      method: "POST",
+      headers: postHeaders,
+      body: newDish,
+      redirect: "follow",
+    };
+
+    fetch("https://frosty-wood-6558.getsandbox.com:443/dishes", postDishes)
+      .then((response) => response.text())
+      .then((result) => console.log(result))
+      .catch((error) => console.log("error", error));
   };
 
   const validate = (e) => {
@@ -39,6 +51,26 @@ const MyForm = () => {
     }
     if (!e.type) {
       errors.type = "Required!";
+    }
+    if (e.type === "pizza") {
+      if (!e.no_of_slices)  {
+        errors.no_of_slices = "Required!";
+        
+      }
+      if (!e.diameter) {
+        errors.diameter = "Required!";
+      }
+    }
+    if (e.type === "soup") {
+      if (!e.spiciness_scale) {
+        errors.spiciness_scale = "Required!";
+      }
+    }
+
+    if (e.type === "soup") {
+      if (!e.slices_of_bread) {
+        errors.slices_of_bread = "Required!";
+      }
     }
 
     return errors;
@@ -62,8 +94,9 @@ const MyForm = () => {
               required
               name="preparation_time"
               component={TextField}
-              type="time"
+              type="text"
               label="Preparation time"
+              placeholder="00:00:00"
             />
 
             <Field
@@ -100,7 +133,7 @@ const MyForm = () => {
                 required
               />
             </Condition>
-            <Condition when="type" is="soup">
+            <Condition when="type" is="soup" type="number">
               <Field
                 name="spiciness_scale"
                 label="Spiciness"
