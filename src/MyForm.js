@@ -7,6 +7,9 @@ import styles from "./MyForm.module.scss";
 const minValue = (min) => (value) =>
   isNaN(value) || value >= min ? undefined : `Number can't be less than ${min}`;
 
+const maxValue = (max) => (value) =>
+  isNaN(value) || value <= max ? undefined : `Number can't be more than ${max}`;
+
 const composeValidators =
   (...validators) =>
   (value) =>
@@ -15,7 +18,7 @@ const composeValidators =
       undefined
     );
 
-const Condition = ({ when, is, children}) => (
+const Condition = ({ when, is, children }) => (
   <Field name={when} subscription={{ value: true }}>
     {({ input: { value } }) => (value === is ? children : null)}
   </Field>
@@ -23,9 +26,21 @@ const Condition = ({ when, is, children}) => (
 
 const MyForm = () => {
   const onSubmit = async (values) => {
-    const newDish = JSON.stringify(values, 0, 2);
+    const createDishObj = {
+      name: values.name,
+      preparation_time: values.preparation_time,
+      type: values.type,
+      no_of_slices: parseInt(values.no_of_slices),
+      diameter: parseInt(values.diameter),
+      spiciness_scale: values.spiciness_scale,
+      slices_of_bread: parseInt(values.slices_of_bread),
+    };
+
+    const newDish = JSON.stringify(createDishObj, 0, 2);
     var postHeaders = new Headers();
     postHeaders.append("Content-Type", "application/json");
+
+    console.log(newDish);
 
     const postDishes = {
       method: "POST",
@@ -53,9 +68,8 @@ const MyForm = () => {
       errors.type = "Required!";
     }
     if (e.type === "pizza") {
-      if (!e.no_of_slices)  {
+      if (!e.no_of_slices) {
         errors.no_of_slices = "Required!";
-        
       }
       if (!e.diameter) {
         errors.diameter = "Required!";
@@ -118,7 +132,7 @@ const MyForm = () => {
                 label="Number of slices"
                 component={TextField}
                 type="number"
-                validate={composeValidators(minValue(0))}
+                validate={composeValidators(minValue(1)  && maxValue(12))}
                 fullWidth
                 required
               />
@@ -127,8 +141,8 @@ const MyForm = () => {
                 label="Diameter"
                 component={TextField}
                 type="number"
-                validate={composeValidators(minValue(0))}
-                // step: 0.1
+                validate={composeValidators(minValue(10) && maxValue(80))}
+                step="0.1"
                 fullWidth
                 required
               />
@@ -150,7 +164,7 @@ const MyForm = () => {
                 label="Number of slices of bread"
                 component={TextField}
                 type="number"
-                validate={composeValidators(minValue(0))}
+                validate={composeValidators(minValue(0) && maxValue(8))}
                 fullWidth
                 required
               />
