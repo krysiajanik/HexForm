@@ -26,21 +26,13 @@ const Condition = ({ when, is, children }) => (
 
 const MyForm = () => {
   const onSubmit = async (values) => {
-    const createDishObj = {
-      name: values.name,
-      preparation_time: values.preparation_time,
-      type: values.type,
-      no_of_slices: parseInt(values.no_of_slices),
-      diameter: parseInt(values.diameter),
-      spiciness_scale: values.spiciness_scale,
-      slices_of_bread: parseInt(values.slices_of_bread),
-    };
+  
 
-    const newDish = JSON.stringify(createDishObj, 0, 2);
+    const newDish = JSON.stringify(values, 0, 2);
     var postHeaders = new Headers();
     postHeaders.append("Content-Type", "application/json");
 
-    console.log(newDish);
+    // console.log(newDish);
 
     const postDishes = {
       method: "POST",
@@ -54,6 +46,7 @@ const MyForm = () => {
       .then((result) => console.log(result))
       .catch((error) => console.log("error", error));
   };
+
 
   const validate = (e) => {
     const errors = {};
@@ -133,6 +126,7 @@ const MyForm = () => {
                 component={TextField}
                 type="number"
                 validate={composeValidators(minValue(1)  && maxValue(12))}
+                parse={value => value && parseInt(value)}
                 fullWidth
                 required
               />
@@ -165,6 +159,7 @@ const MyForm = () => {
                 component={TextField}
                 type="number"
                 validate={composeValidators(minValue(0) && maxValue(8))}
+                parse={value => value && parseInt(value)}
                 fullWidth
                 required
               />
