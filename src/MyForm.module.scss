@@ -1,11 +1,10 @@
-
-.wrapper {
-    padding: 20px;
-    margin: 36px auto;
-    max-width: 60vw;
-    text-align: center;
-   
-  
+.buttonWrapper {
+    margin: 16px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 22px;
 }
 
 .dishForm {
@@ -16,12 +15,36 @@
     gap: 22px;
 }
 
-.buttonWrapper {
-    margin: 16px;
+.fieldWrapper {
+    width: 100%;
     display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    gap: 22px;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: flex-end;
 }
 
+.fieldHelperTxt {
+    display: block;
+    color: gray;
+    font-size: 12px;
+    text-align: left;
+    padding-top: 4px;
+}
+
+.formHeader {
+    font-size: 32px;
+    line-height: 48px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+}
+
+.wrapper {
+    padding: 20px;
+    margin: 36px auto;
+    max-width: 40vw;
+    min-width: 320px;
+    text-align: center;
+    @media screen and (max-width: 800px) {
+        max-width: 60vw;
+    }
+}
