@@ -1,12 +1,7 @@
 import React from "react";
 import { Form, Field } from "react-final-form";
-import { TextField, Radio, Select } from "final-form-material-ui";
-import {
-  MenuItem,
-  Button,
-  RadioGroup,
-} from "@material-ui/core";
-import Spiciness from "./Spiciness";
+import { TextField, Select } from "final-form-material-ui";
+import { MenuItem, Button } from "@material-ui/core";
 import styles from "./MyForm.module.scss";
 
 const minValue = (min) => (value) =>
@@ -54,10 +49,10 @@ const MyForm = () => {
       redirect: "follow",
     };
 
-    //   fetch("https://frosty-wood-6558.getsandbox.com:443/dishes", postDishes)
-    //     .then((response) => response.text())
-    //     .then((result) => console.log(result))
-    //     .catch((error) => console.log("error", error));
+      fetch("https://frosty-wood-6558.getsandbox.com:443/dishes", postDishes)
+        .then((response) => response.text())
+        .then((result) => console.log(result))
+        .catch((error) => console.log("error", error));
   };
 
   const validate = (e) => {
@@ -167,104 +162,26 @@ const MyForm = () => {
                 required
               />
             </Condition>
-            {/* <Condition when="type" is="soup" type="number">
-            <Field
-                    name="spiciness_scale"
-                    component={Select}
-                    formControlProps={{ fullWidth: true }}
-                    label="Spiciness scale"
-                  >
-                    <MenuItem value="1">1</MenuItem>
-                    <MenuItem value="2">2</MenuItem>
-                    <MenuItem value="3">3</MenuItem>
-                    <MenuItem value="4">4</MenuItem>
-                    <MenuItem value="5">5</MenuItem>
-                    <MenuItem value="6">6</MenuItem>
-                    <MenuItem value="7">7</MenuItem>
-                    <MenuItem value="8">8</MenuItem>
-                    <MenuItem value="9">9</MenuItem>
-                    <MenuItem value="10">10</MenuItem>
-                  </Field>
-              */}
-                {/* <RadioGroup row label="spiciness_scale">
-                  <label>
-                    1
-                    <Field
-                      name="spiciness_scale"
-                      component={Radio}
-                      type="radio"
-                      color="primary"
-                      value="1"
-                    />
-                  </label>
-                  <Field
-                      name="spiciness_scale"
-                      component={Radio}
-                      type="radio"
-                      color="primary"
-                      value="2"
-                    />
-                    <Field
-                      name="spiciness_scale"
-                      component={Radio}
-                      type="radio"
-                      color="primary"
-                      value="3"
-                    />
-                    <Field
-                      name="spiciness_scale"
-                      component={Radio}
-                      type="radio"
-                      color="primary"
-                      value="4"
-                    />
-                    <Field
-                      name="spiciness_scale"
-                      component={Radio}
-                      type="radio"
-                      color="primary"
-                      value="5"
-                    />
-                    <Field
-                      name="spiciness_scale"
-                      component={Radio}
-                      type="radio"
-                      color="primary"
-                      value="6"
-                    />
-                    <Field
-                      name="spiciness_scale"
-                      component={Radio}
-                      type="radio"
-                      color="primary"
-                      value="7"
-                    />
-                    <Field
-                      name="spiciness_scale"
-                      component={Radio}
-                      type="radio"
-                      color="primary"
-                      value="8"
-                    />
-                    <Field
-                      name="spiciness_scale"
-                      component={Radio}
-                      type="radio"
-                      color="primary"
-                      value="9"
-                    />
-                  <label>
-                    10
-                    <Field
-                      name="spiciness_scale"
-                      component={Radio}
-                      type="radio"
-                      color="primary"
-                      value="10"
-                    />
-                  </label>
-                </RadioGroup> */}
-            {/* </Condition>  */}
+            <Condition when="type" is="soup" type="number">
+              <Field
+                name="spiciness_scale"
+                component={TextField}
+                label="Spiciness scale"
+                fullWidth
+                required
+              >
+                <MenuItem value="1">1</MenuItem>
+                <MenuItem value="2">2</MenuItem>
+                <MenuItem value="3">3</MenuItem>
+                <MenuItem value="4">4</MenuItem>
+                <MenuItem value="5">5</MenuItem>
+                <MenuItem value="6">6</MenuItem>
+                <MenuItem value="7">7</MenuItem>
+                <MenuItem value="8">8</MenuItem>
+                <MenuItem value="9">9</MenuItem>
+                <MenuItem value="10">10</MenuItem>
+              </Field>
+            </Condition>
             <Condition when="type" is="sandwich">
               <Field
                 name="slices_of_bread"
@@ -282,7 +199,7 @@ const MyForm = () => {
                 variant="outlined"
                 size="medium"
                 type="button"
-                onClick={form.reset}
+                onClick={form.restart}
                 disabled={submitting}
               >
                 Reset
