@@ -1,7 +1,8 @@
 import React from "react";
 import { Form, Field } from "react-final-form";
-import { TextField, Select } from "final-form-material-ui";
+import { TextField, Select} from "final-form-material-ui";
 import { MenuItem, Button } from "@material-ui/core";
+import validate from "./Validate";
 import styles from "./MyForm.module.scss";
 
 const minValue = (min) => (value) =>
@@ -36,12 +37,22 @@ const normalizeDuration = (value) => {
 const MyForm = () => {
   const onSubmit = async (values) => {
     console.log(values);
-    const newDish = JSON.stringify(values, 0, 2);
+
+    const createDishObj = {
+      name: values.name,
+      preparation_time: values.preparation_time,
+      type: values.type,
+      no_of_slices: parseInt(values.no_of_slices),
+      diameter: parseFloat(values.diameter),
+      spiciness_scale: values.spiciness_scale,
+      slices_of_bread: parseInt(values.slices_of_bread),
+    };
+
+    const newDish = JSON.stringify(createDishObj, 0, 2);
     var postHeaders = new Headers();
     postHeaders.append("Content-Type", "application/json");
 
     console.log(newDish);
-
     const postDishes = {
       method: "POST",
       headers: postHeaders,
@@ -49,57 +60,10 @@ const MyForm = () => {
       redirect: "follow",
     };
 
-      fetch("https://frosty-wood-6558.getsandbox.com:443/dishes", postDishes)
-        .then((response) => response.text())
-        .then((result) => console.log(result))
-        .catch((error) => console.log("error", error));
-  };
-
-  const validate = (e) => {
-    const errors = {};
-
-    if (!e.name) {
-      errors.name = "Required!";
-    }
-    if (!e.preparation_time) {
-      errors.preparation_time = "Required!";
-    }
-
-    if (
-      e.preparation_time &&
-      !e.preparation_time.match(/[0-0][0-2]:[0-5][0-9]:[0-5][0-9]/g)
-    ) {
-      errors.preparation_time = "Incorrect input - max duration 02:59:59";
-    }
-
-    if (!e.type) {
-      errors.type = "Required!";
-    }
-    if (e.type === "pizza") {
-      if (!e.no_of_slices) {
-        errors.no_of_slices = "Required!";
-      }
-      if (!e.diameter) {
-        errors.diameter = "Required!";
-      }
-    }
-    if (e.diameter && !e.diameter.match(/[0-7][0-9].[0-9]|[0-8][0-0].[0-0]/g)) {
-      errors.diameter = "Please input value in format 00.0!";
-    }
-
-    if (e.type === "soup") {
-      if (!e.spiciness_scale) {
-        errors.spiciness_scale = "Required!";
-      }
-    }
-
-    if (e.type === "soup") {
-      if (!e.slices_of_bread) {
-        errors.slices_of_bread = "Required!";
-      }
-    }
-
-    return errors;
+    //   fetch("https://frosty-wood-6558.getsandbox.com:443/dishes", postDishes)
+    //     .then((response) => response.text())
+    //     .then((result) => console.log(result))
+    //     .catch((error) => console.log("error", error));
   };
 
   return (
@@ -157,7 +121,6 @@ const MyForm = () => {
                 type="number"
                 validate={composeValidators(minValue(10) && maxValue(80))}
                 placeholder="00.0"
-                step="0.1"
                 fullWidth
                 required
               />
@@ -165,7 +128,8 @@ const MyForm = () => {
             <Condition when="type" is="soup" type="number">
               <Field
                 name="spiciness_scale"
-                component={TextField}
+                component={Select}
+                formControlProps={{ fullWidth: true }}
                 label="Spiciness scale"
                 fullWidth
                 required
@@ -189,7 +153,6 @@ const MyForm = () => {
                 component={TextField}
                 type="number"
                 validate={composeValidators(minValue(0) && maxValue(8))}
-                parse={(value) => value && parseInt(value)}
                 fullWidth
                 required
               />
