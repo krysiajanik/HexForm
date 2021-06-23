@@ -1,20 +1,20 @@
 {
   "files": {
-    "main.css": "/HexForm/static/css/main.c4185775.chunk.css",
-    "main.js": "/HexForm/static/js/main.ab4ce000.chunk.js",
-    "main.js.map": "/HexForm/static/js/main.ab4ce000.chunk.js.map",
+    "main.css": "/HexForm/static/css/main.034b13ce.chunk.css",
+    "main.js": "/HexForm/static/js/main.7ab43b6c.chunk.js",
+    "main.js.map": "/HexForm/static/js/main.7ab43b6c.chunk.js.map",
     "runtime-main.js": "/HexForm/static/js/runtime-main.3a84912b.js",
     "runtime-main.js.map": "/HexForm/static/js/runtime-main.3a84912b.js.map",
-    "static/js/2.5d0dacde.chunk.js": "/HexForm/static/js/2.5d0dacde.chunk.js",
-    "static/js/2.5d0dacde.chunk.js.map": "/HexForm/static/js/2.5d0dacde.chunk.js.map",
+    "static/js/2.1f921299.chunk.js": "/HexForm/static/js/2.1f921299.chunk.js",
+    "static/js/2.1f921299.chunk.js.map": "/HexForm/static/js/2.1f921299.chunk.js.map",
     "index.html": "/HexForm/index.html",
-    "static/css/main.c4185775.chunk.css.map": "/HexForm/static/css/main.c4185775.chunk.css.map",
-    "static/js/2.5d0dacde.chunk.js.LICENSE.txt": "/HexForm/static/js/2.5d0dacde.chunk.js.LICENSE.txt"
+    "static/css/main.034b13ce.chunk.css.map": "/HexForm/static/css/main.034b13ce.chunk.css.map",
+    "static/js/2.1f921299.chunk.js.LICENSE.txt": "/HexForm/static/js/2.1f921299.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.3a84912b.js",
-    "static/js/2.5d0dacde.chunk.js",
-    "static/css/main.c4185775.chunk.css",
-    "static/js/main.ab4ce000.chunk.js"
+    "static/js/2.1f921299.chunk.js",
+    "static/css/main.034b13ce.chunk.css",
+    "static/js/main.7ab43b6c.chunk.js"
   ]
 }
