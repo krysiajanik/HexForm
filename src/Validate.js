@@ -1,11 +1,13 @@
+const reqErr = "Required"
+
 const validate = (e) => {
     const errors = {};
 
     if (!e.name) {
-      errors.name = "Required!";
+      errors.name = reqErr;
     }
     if (!e.preparation_time) {
-      errors.preparation_time = "Required!";
+      errors.preparation_time = reqErr;
     }
 
     if (
@@ -16,14 +18,14 @@ const validate = (e) => {
     }
 
     if (!e.type) {
-      errors.type = "Required!";
+      errors.type = reqErr;
     }
     if (e.type === "pizza") {
       if (!e.no_of_slices) {
-        errors.no_of_slices = "Required!";
+        errors.no_of_slices = reqErr;
       }
       if (!e.diameter) {
-        errors.diameter = "Required!";
+        errors.diameter = reqErr;
       }
     }
     if (e.diameter && !e.diameter.match(/[0-7][0-9].[0-9]|[0-8][0-0].[0-0]/g)) {
@@ -32,13 +34,13 @@ const validate = (e) => {
 
     if (e.type === "soup") {
       if (!e.spiciness_scale) {
-        errors.spiciness_scale = "Required!";
+        errors.spiciness_scale = reqErr;
       }
     }
 
     if (e.type === "soup") {
       if (!e.slices_of_bread) {
-        errors.slices_of_bread = "Required!";
+        errors.slices_of_bread = reqErr;
       }
     }
 

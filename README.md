@@ -4,10 +4,9 @@ Form built on Final Form and Material UI components. Includes field-level valida
 
 ## Preview
 
-You can preview the form at ![HexForm Website](https://krysiajanik.github.io/HexForm/)
+You can preview the form at [HexForm Website](https://krysiajanik.github.io/HexForm/)
 
 ## Project setup
-
     1. Open your command line and go to the directory in which you would like to set up the project.
     2. Clone the library by typing `git clone` and pasting the link https://github.com/krysiajanik/HexForm.git
     3. Run `npm install` to install the dependencies (make sure you have both node and npm installed)

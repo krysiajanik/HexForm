@@ -3,42 +3,14 @@ import { Form, Field } from "react-final-form";
 import { TextField, Select } from "final-form-material-ui";
 import { MenuItem, Button } from "@material-ui/core";
 import validate from "./Validate";
-import Logo from "./Logo.js"
+import Condition from "./Condition";
+import composeValidators from "./ValidatorsFn";
+import normalizeDuration from "./Duration";
+import Logo from "./Logo.js";
 import styles from "./MyForm.module.scss";
-
-const minValue = (min) => (value) =>
-  isNaN(value) || value >= min ? undefined : `Number can't be less than ${min}`;
-
-const maxValue = (max) => (value) =>
-  isNaN(value) || value <= max ? undefined : `Number can't be more than ${max}`;
-
-const composeValidators =
-  (...validators) =>
-  (value) =>
-    validators.reduce(
-      (error, validator) => error || validator(value),
-      undefined
-    );
-
-const Condition = ({ when, is, children }) => (
-  <Field name={when} subscription={{ value: true }}>
-    {({ input: { value } }) => (value === is ? children : null)}
-  </Field>
-);
-
-const normalizeDuration = (value) => {
-  if (!value) return value;
-  const onlyNums = value.replace(/[^\d]/g, "");
-  return `${onlyNums.slice(0, 2)}:${onlyNums.slice(2, 4)}:${onlyNums.slice(
-    4,
-    6
-  )}`;
-};
 
 const MyForm = () => {
   const onSubmit = async (values) => {
-    console.log(values);
-
     const createDishObj = {
       name: values.name,
       preparation_time: values.preparation_time,
@@ -50,10 +22,9 @@ const MyForm = () => {
     };
 
     const newDish = JSON.stringify(createDishObj, 0, 2);
-    var postHeaders = new Headers();
+    const postHeaders = new Headers();
     postHeaders.append("Content-Type", "application/json");
 
-    console.log(newDish);
     const postDishes = {
       method: "POST",
       headers: postHeaders,
@@ -61,11 +32,22 @@ const MyForm = () => {
       redirect: "follow",
     };
 
-    //   fetch("https://frosty-wood-6558.getsandbox.com:443/dishes", postDishes)
-    //     .then((response) => response.text())
-    //     .then((result) => console.log(result))
-    //     .catch((error) => console.log("error", error));
+    fetch("https://frosty-wood-6558.getsandbox.com:443/dishes", postDishes)
+      .then((response) => response.text())
+      .then((result) => console.log(result))
+      .then(() => window.alert("Dish submitted"))
+      .catch((error) => window.alert("error", error));
   };
+
+  const minValue = (min) => (value) =>
+    isNaN(value) || value >= min
+      ? undefined
+      : `Number can't be less than ${min}`;
+
+  const maxValue = (max) => (value) =>
+    isNaN(value) || value <= max
+      ? undefined
+      : `Number can't be more than ${max}`;
 
   return (
     <div className={styles.wrapper}>
@@ -98,13 +80,11 @@ const MyForm = () => {
                 placeholder="00:00:00"
                 parse={normalizeDuration}
               />
-            
-                
               <label for="name" className={styles.fieldHelperTxt}>
                 Preparation time can be maximum 02:59:59
               </label>
-              </div>
-              <div className={styles.fieldWrapper}>
+            </div>
+            <div className={styles.fieldWrapper}>
               <Field
                 name="type"
                 id="type"
@@ -192,7 +172,7 @@ const MyForm = () => {
                   required
                 />
                 <label for="name" className={styles.fieldHelperTxt}>
-                  Maximum 8 slices of bread 
+                  Maximum 8 slices of bread
                 </label>
               </div>
             </Condition>
